@@ -185,6 +185,35 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `host -t PTR 10.8.
 > Agar dapat tetap dihubungi jika server WISE bermasalah, buatlah juga Berlint sebagai DNS Slave untuk domain utama.
 
 ### Penyelesaian
+Pertama kita membuat file named-3.conf.local pada root node `WISE` dengan isi sebagai berikut:
+  
+  ```shell
+  zone "wise.b10.com" {
+          type master;
+          notify yes;
+          also-notify { 10.8.2.2; };
+          allow-transfer { 10.8.2.2; };
+          file "/etc/bind/wise/wise.b10.com";
+  };
+
+  zone "3.8.10.in-addr.arpa" {
+      type master;
+      file "/etc/bind/wise/3.8.10.in-addr.arpa";
+  };
+  ```
+  
+Lalu, kita membuat file named-1.conf.local pada root node `Berlint` dengan isi sebagai berikut:
+  
+  ```shell
+  zone "wise.b10.com" {
+      type slave;
+      masters { 10.8.3.2; };
+      file "/var/lib/bind/wise.b10.com";
+  };
+  ```
+  
+Untuk pengecekan, kita membuat file script test-stop.sh pada root node `WISE` dengan command `service bind9 stop`. Setelah itu, kita test slave pada client `SSS` dan `Garden` dengan command `ping wise.b10.com -c 4`.
+
 ![image](https://user-images.githubusercontent.com/67154280/197752672-9c9da922-7cdf-403e-b8a0-4e21feea2345.png)
 
 ### 6
