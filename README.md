@@ -20,18 +20,114 @@
 > Semua node terhubung pada router Ostania, sehingga dapat mengakses internet.
 
 ### Penyelesaian
-
+Pertama kita buat script di root dan dijalankan dengan file .bashrc dengan isi sebagai berikut:
+  
+- Ostania
+  
+  ```shell
+  iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.8.0.0/16
+  cat /etc/resolv.conf
+  ```
+  
+- WISE, dll
+  
+  ```shell
+  echo "nameserver 192.168.122.1" > /etc/resolv.conf
+  cat /etc/resolv.conf
+  ```
+  
+Setelah itu, kita lakukan test koneksi dengan `ping google.com -c 4`.
+  
+![image](https://user-images.githubusercontent.com/67154280/197733942-e1ca69cc-049f-4917-aae2-75003131f531.png)
 
 ### 2
 > Untuk mempermudah mendapatkan informasi mengenai misi dari Handler, bantulah Loid membuat website utama dengan akses **wise.yyy.com** dengan alias **www.wise.yyy.com** pada folder wise.
 
 ### Penyelesaian
+Pertama kita membuat file named-1.conf.local dan wise-1.b10.com pada root node `WISE` dengan isi sebagai berikut:
+  
+- named-1.conf.local
+  
+  ```shell
+  zone "wise.b10.com" {
+        type master;
+        file "/etc/bind/wise/wise.b10.com";
+  };
+  ```
+- wise-1.b10.com
+  
+  ```shell
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     wise.b10.com. root.wise.b10.com. (
+                       2022100601         ; Serial
+                           604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                           604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      wise.b10.com.
+  @       IN      A       10.8.3.2
+  www     IN      CNAME   wise.b10.com.
+  ```
 
+Setelah itu, kita buat script `soal2.sh` dengan isi sebagai berikut untuk membuat website utama pada folder wise
+  
+  ```shell
+  apt-get update
+  apt-get install bind9 -y
+
+  cp /root/named-1.conf.local /etc/bind/named.conf.local
+
+  mkdir /etc/bind/wise
+
+  cp /root/wise-1.b10.com /etc/bind/wise/wise.b10.com
+
+  service bind9 restart
+  ```
+  
+Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping wise.b10.com -c 4` dan `host -t CNAME www.wise.b10.com` dengan mengubah nameserver menjadi `10.8.3.2`.
+  
+![image](https://user-images.githubusercontent.com/67154280/197740918-2e10eea7-d520-4c33-bc3c-1a02e269fa1c.png)
 
 ### 3
 > Setelah itu ia juga ingin membuat subdomain **eden.wise.yyy.com** dengan alias **www.eden.wise.yyy.com** yang diatur DNS-nya di WISE dan mengarah ke Eden.
 
 ### Penyelesaian
+Pertama kita membuat file wise-2.b10.com pada root node `WISE` dengan isi sebagai berikut: 
+
+  ```shell
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     wise.b10.com. root.wise.b10.com. (
+                       2022100601         ; Serial
+                           604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                           604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      wise.b10.com.
+  @       IN      A       10.8.3.2
+  www     IN      CNAME   wise.b10.com.
+  eden    IN      A       10.8.2.3
+  www.eden IN     CNAME   eden.wise.b10.com.
+  ```
+  
+Setelah itu, kita buat script `soal3.sh` dengan isi sebagai berikut untuk membuat subdomain pada folder wise
+  
+  ```shell
+  cp /root/wise-2.b10.com /etc/bind/wise/wise.b10.com
+
+  service bind9 restart
+  ```
+  
+Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping eden.wise.b10.com -c 4` dan `host -t CNAME www.eden.wise.b10.com`.
+  
+![image](https://user-images.githubusercontent.com/67154280/197744058-98596e5c-daa4-4b2f-af52-0f997865cd86.png)
 
 
 ### 4
