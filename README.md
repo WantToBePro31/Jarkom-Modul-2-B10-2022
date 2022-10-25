@@ -197,7 +197,7 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `host -t PTR 10.8.
 > Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses **strix.operation.wise.yyy.com** dengan alias **www.strix.operation.wise.yyy.com** yang mengarah ke Eden.
 
 ### Penyelesaian
-
+![image](https://user-images.githubusercontent.com/67154280/197773578-3d916eca-7b5c-4b8c-b0f4-fe3015aa5588.png)
 
 ### 8
 > Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver **www.wise.yyy.com**. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com.
