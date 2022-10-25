@@ -134,6 +134,51 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping eden.wise.b1
 > Buat juga reverse domain untuk domain utama.
 
 ### Penyelesaian
+Pertama kita membuat file named-2.conf.local dan 3.8.10.in-addr.arpa-1 pada root node `WISE` dengan isi sebagai berikut:
+  
+- named-2.conf.local
+  
+  ```shell
+  zone "wise.b10.com" {
+          type master;
+          file "/etc/bind/wise/wise.b10.com";
+  };
+
+  zone "3.8.10.in-addr.arpa" {
+      type master;
+      file "/etc/bind/wise/3.8.10.in-addr.arpa";
+  };
+  ```
+- wise-1.b10.com
+  
+  ```shell
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     wise.b10.com. root.wise.b10.com. (
+                          2022100601      ; Serial
+                           604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                           604800 )       ; Negative Cache TTL
+  ;
+  3.8.10.in-addr.arpa. IN NS      wise.b10.com.
+  2                    IN PTR     wise.b10.com.
+  ```
+
+Setelah itu, kita buat script `soal4.sh` dengan isi sebagai berikut untuk membuat reverse domain pada folder wise
+
+  ```shell
+  cp /root/named-2.conf.local /etc/bind/named.conf.local
+  cp /root/3.8.10.in-addr.arpa-1 /etc/bind/wise/3.8.10.in-addr.arpa
+
+  service bind9 restart
+  ```
+  
+Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `host -t PTR 10.8.3.2`.
+  
+![image](https://user-images.githubusercontent.com/67154280/197747909-d9f11e86-0fcd-49dc-b8df-8254df1d2958.png)
 
 
 ### 5
