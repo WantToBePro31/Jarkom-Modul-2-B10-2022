@@ -187,12 +187,11 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `host -t PTR 10.8.
 ### Penyelesaian
 ![image](https://user-images.githubusercontent.com/67154280/197752672-9c9da922-7cdf-403e-b8a0-4e21feea2345.png)
 
-
 ### 6
 > Karena banyak informasi dari Handler, buatlah subdomain yang khusus untuk operation yaitu **operation.wise.yyy.com** dengan alias **www.operation.wise.yyy.com** yang didelegasikan dari WISE ke Berlint dengan IP menuju ke Eden dalam folder operation.
 
 ### Penyelesaian
-
+![image](https://user-images.githubusercontent.com/67154280/197771909-fa2179ed-7c16-4780-b6a5-11634ef9ee6c.png)
 
 ### 7
 > Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses **strix.operation.wise.yyy.com** dengan alias **www.strix.operation.wise.yyy.com** yang mengarah ke Eden.
