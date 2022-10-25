@@ -201,6 +201,14 @@ Pertama kita membuat file named-3.conf.local pada root node `WISE` dengan isi se
       file "/etc/bind/wise/3.8.10.in-addr.arpa";
   };
   ```
+
+Kita juga membuat script `soal5.sh` dengan isian sebagai berikut:
+  
+  ```shell
+  cp /root/named-3.conf.local /etc/bind/named.conf.local
+
+  service bind9 restart
+  ```
   
 Lalu, kita membuat file named-1.conf.local pada root node `Berlint` dengan isi sebagai berikut:
   
@@ -211,6 +219,17 @@ Lalu, kita membuat file named-1.conf.local pada root node `Berlint` dengan isi s
       file "/var/lib/bind/wise.b10.com";
   };
   ```
+
+Kita juga membuat script `soal5.sh` dengan isian sebagai berikut:
+  
+  ```shell
+  apt-get update
+  apt-get install bind9 -y
+
+  cp /root/named-1.conf.local /etc/bind/named.conf.local
+
+  service bind9 restart
+  ```
   
 Untuk pengecekan, kita membuat file script test-stop.sh pada root node `WISE` dengan command `service bind9 stop`. Setelah itu, kita test slave pada client `SSS` dan `Garden` dengan command `ping wise.b10.com -c 4`.
 
@@ -220,12 +239,189 @@ Untuk pengecekan, kita membuat file script test-stop.sh pada root node `WISE` de
 > Karena banyak informasi dari Handler, buatlah subdomain yang khusus untuk operation yaitu **operation.wise.yyy.com** dengan alias **www.operation.wise.yyy.com** yang didelegasikan dari WISE ke Berlint dengan IP menuju ke Eden dalam folder operation.
 
 ### Penyelesaian
+Pertama kita membuat file named-1.conf.options dan wise-3.b10.com pada root node `WISE` dengan isi sebagai berikut:
+  
+- named-1.conf.options
+  
+  ```shell
+  options {
+          directory "/var/cache/bind";
+
+          // If there is a firewall between you and nameservers you want
+          // to talk to, you may need to fix the firewall to allow multiple
+          // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+          // If your ISP provided one or more IP addresses for stable
+          // nameservers, you probably want to use them as forwarders.
+          // Uncomment the following block, and insert the addresses replacing
+          // the all-0's placeholder.
+
+          // forwarders {
+          //      0.0.0.0;
+          // };
+
+          //=====================================================================$
+          // If BIND logs error messages about the root key being expired,
+          // you will need to update your keys.  See https://www.isc.org/bind-keys
+          //=====================================================================$
+          // dnssec-validation auto;
+          allow-query{any;};
+
+          auth-nxdomain no;    # conform to RFC1035
+          listen-on-v6 { any; };
+  };
+  ```
+  
+- wise-3.b10.com
+  
+  ```shell
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     wise.b10.com. root.wise.b10.com. (
+                       2022100601         ; Serial
+                           604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                           604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      wise.b10.com.
+  @       IN      A       10.8.3.2
+  www     IN      CNAME   wise.b10.com.
+  eden    IN      A       10.8.2.3
+  www.eden IN     CNAME   eden.wise.b10.com.
+  ns1     IN      A       10.8.2.3
+  operation IN    NS      ns1
+  ```
+
+Kita juga membuat script `soal6.sh` dengan isian sebagai berikut:
+  
+  ```shell
+  cp /root/named-1.conf.options /etc/bind/named.conf.options
+  cp /root/wise-3.b10.com /etc/bind/wise/wise.b10.com
+
+  service bind9 restart
+  ```
+
+Lalu, kita membuat file named-1.conf.options, named-2.conf.local, dan operation-1.wise.b10.com pada root node `Berlint` dengan isi sebagai berikut:
+  
+- named-1.conf.options
+  
+  ```shell
+  options {
+          directory "/var/cache/bind";
+
+          // If there is a firewall between you and nameservers you want
+          // to talk to, you may need to fix the firewall to allow multiple
+          // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+          // If your ISP provided one or more IP addresses for stable
+          // nameservers, you probably want to use them as forwarders.
+          // Uncomment the following block, and insert the addresses replacing
+          // the all-0's placeholder.
+
+          // forwarders {
+          //      0.0.0.0;
+          // };
+
+          //=====================================================================$
+          // If BIND logs error messages about the root key being expired,
+          // you will need to update your keys.  See https://www.isc.org/bind-keys
+          //=====================================================================$
+          // dnssec-validation auto;
+          allow-query{any;};
+
+          auth-nxdomain no;    # conform to RFC1035
+          listen-on-v6 { any; };
+  };
+  ```
+  
+- named-2.conf.local
+  
+  ```shell
+  zone "wise.b10.com" {
+      type slave;
+      masters { 10.8.3.2; };
+      file "/var/lib/bind/wise.b10.com";
+  };
+
+  zone "operation.wise.b10.com" {
+     type master;
+     file "/etc/bind/operation/operation.wise.b10.com";
+  };
+  ```
+  
+- operation-1.wise.b10.com
+  
+  ```shell
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     operation.wise.b10.com. root.operation.wise.b10.com. (
+                          2022100601      ; Serial
+                           604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                           604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      operation.wise.b10.com.
+  @       IN      A       10.8.2.3
+  www     IN      CNAME   operation.wise.b10.com.
+  ```
+  
+Kita juga membuat script `soal6.sh` dengan isian sebagai berikut:
+  
+  ```shell
+  cp /root/named-1.conf.options /etc/bind/named.conf.options
+  cp /root/named-2.conf.local /etc/bind/named.conf.local
+
+  mkdir /etc/bind/operation
+  cp /root/operation-1.wise.b10.com /etc/bind/operation/operation.wise.b10.com
+
+  service bind9 restart
+  ```
+  
+Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping operation.wise.b10.com -c 4` dan `ping www.operation.wise.b10.com -c 4`.
+  
 ![image](https://user-images.githubusercontent.com/67154280/197771909-fa2179ed-7c16-4780-b6a5-11634ef9ee6c.png)
 
 ### 7
 > Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses **strix.operation.wise.yyy.com** dengan alias **www.strix.operation.wise.yyy.com** yang mengarah ke Eden.
 
 ### Penyelesaian
+Pertama kita membuat file operation-2.wise.b10.com pada root node `Berlint` dengan isi sebagai berikut:
+  
+  ```shell
+  ;
+  ; BIND data file for local loopback interface
+  ;
+  $TTL    604800
+  @       IN      SOA     operation.wise.b10.com. root.operation.wise.b10.com. (
+                          2022100601      ; Serial
+                           604800         ; Refresh
+                            86400         ; Retry
+                          2419200         ; Expire
+                           604800 )       ; Negative Cache TTL
+  ;
+  @       IN      NS      operation.wise.b10.com.
+  @       IN      A       10.8.2.3
+  www     IN      CNAME   operation.wise.b10.com.
+  strix   IN      A       10.8.2.3
+  www.strix IN    CNAME   strix.operation.wise.b10.com.
+  ```
+  
+Kita juga membuat script `soal7.sh` dengan isian sebagai berikut:
+  
+  ```shell
+  cp /root/operation-2.wise.b10.com /etc/bind/operation/operation.wise.b10.com
+
+  service bind9 restart
+  ```
+  
+Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operation.wise.b10.com -c 4` dan `ping www.strix.operation.wise.b10.com -c 4`.
+  
 ![image](https://user-images.githubusercontent.com/67154280/197773578-3d916eca-7b5c-4b8c-b0f4-fe3015aa5588.png)
 
 ### 8
