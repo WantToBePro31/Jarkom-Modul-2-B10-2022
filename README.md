@@ -185,6 +185,7 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `host -t PTR 10.8.
 > Agar dapat tetap dihubungi jika server WISE bermasalah, buatlah juga Berlint sebagai DNS Slave untuk domain utama.
 
 ### Penyelesaian
+![image](https://user-images.githubusercontent.com/67154280/197752672-9c9da922-7cdf-403e-b8a0-4e21feea2345.png)
 
 
 ### 6
