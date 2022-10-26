@@ -442,25 +442,27 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operat
 > Setelah itu, pada subdomain **www.eden.wise.yyy.com**, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com.
 
 ### Penyelesaian
-![image](https://user-images.githubusercontent.com/67154280/198049314-642d0108-805a-412a-a9dd-146e9fb4927e.png)
+![image](https://user-images.githubusercontent.com/67154280/198050387-2a0cb41b-550f-47e8-a603-f749bbe40b7f.png)
 
 
 ### 11
 > Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja.
 
 ### Penyelesaian
-
+![image](https://user-images.githubusercontent.com/67154280/198049314-642d0108-805a-412a-a9dd-146e9fb4927e.png)
 
 ### 12
 > Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
 
 ### Penyelesaian
+![image](https://user-images.githubusercontent.com/67154280/198051102-5ba800d6-673e-46a2-9d83-2549e5e3f360.png)
 
 
 ### 13
 > Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset **www.eden.wise.yyy.com/public/js** menjadi **www.eden.wise.yyy.com/js**.
 
 ### Penyelesaian
+![image](https://user-images.githubusercontent.com/67154280/198051833-d3f8ebaf-78cc-46a9-a556-0884dbcc3bcb.png)
 
 
 ### 14
