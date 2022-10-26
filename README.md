@@ -442,6 +442,7 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operat
 > Setelah itu, pada subdomain **www.eden.wise.yyy.com**, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com.
 
 ### Penyelesaian
+![image](https://user-images.githubusercontent.com/67154280/198049314-642d0108-805a-412a-a9dd-146e9fb4927e.png)
 
 
 ### 11
