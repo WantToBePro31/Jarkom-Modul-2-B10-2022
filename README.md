@@ -435,6 +435,7 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operat
 > Setelah itu, Loid juga membutuhkan agar url **www.wise.yyy.com/index.php/home** dapat menjadi menjadi **www.wise.yyy.com/home**.
 
 ### Penyelesaian
+![image](https://user-images.githubusercontent.com/67154280/198043861-607baa70-0fcc-4a7a-bfcb-c201b913ffe2.png)
 
 
 ### 10
