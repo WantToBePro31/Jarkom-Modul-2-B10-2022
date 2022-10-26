@@ -149,7 +149,7 @@ Pertama kita membuat file named-2.conf.local dan 3.8.10.in-addr.arpa-1 pada root
       file "/etc/bind/wise/3.8.10.in-addr.arpa";
   };
   ```
-- wise-1.b10.com
+- 3.8.10.in-addr.arpa-1
   
   ```shell
   ;
