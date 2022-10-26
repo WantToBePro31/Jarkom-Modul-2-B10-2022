@@ -428,6 +428,7 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operat
 > Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver **www.wise.yyy.com**. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com.
 
 ### Penyelesaian
+![image](https://user-images.githubusercontent.com/67154280/198006471-78b62a5d-9d74-4bfe-9980-223e57522fac.png)
 
 
 ### 9
