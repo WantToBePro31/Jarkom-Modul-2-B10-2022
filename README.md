@@ -73,7 +73,7 @@ Pertama kita membuat file named-1.conf.local dan wise-1.b10.com pada root node `
   www     IN      CNAME   wise.b10.com.
   ```
 
-Setelah itu, kita buat script `soal2.sh` dengan isi sebagai berikut untuk membuat website utama pada folder wise
+Setelah itu, kita buat script `soal2.sh` dengan isi sebagai berikut untuk menambahkan zone domain utama dan membuat website utama pada folder wise
   
   ```shell
   apt-get update
@@ -117,7 +117,7 @@ Pertama kita membuat file wise-2.b10.com pada root node `WISE` dengan isi sebaga
   www.eden IN     CNAME   eden.wise.b10.com.
   ```
   
-Setelah itu, kita buat script `soal3.sh` dengan isi sebagai berikut untuk membuat subdomain pada folder wise
+Setelah itu, kita buat script `soal3.sh` dengan isi sebagai berikut untuk membuat subdomain eden.wise.b10.com pada folder wise
   
   ```shell
   cp /root/wise-2.b10.com /etc/bind/wise/wise.b10.com
@@ -167,7 +167,7 @@ Pertama kita membuat file named-2.conf.local dan 3.8.10.in-addr.arpa-1 pada root
   2                    IN PTR     wise.b10.com.
   ```
 
-Setelah itu, kita buat script `soal4.sh` dengan isi sebagai berikut untuk membuat reverse domain pada folder wise
+Setelah itu, kita buat script `soal4.sh` dengan isi sebagai berikut untuk menambahkan zone reverse domain dan membuat reverse domain (in-addr.arpa) pada folder wise
 
   ```shell
   cp /root/named-2.conf.local /etc/bind/named.conf.local
@@ -202,7 +202,7 @@ Pertama kita membuat file named-3.conf.local pada root node `WISE` dengan isi se
   };
   ```
 
-Kita juga membuat script `soal5.sh` dengan isian sebagai berikut:
+Kita juga membuat script `soal5.sh` untuk menambahkan konfigurasi ketika beralih ke Berlint dengan isian sebagai berikut:
   
   ```shell
   cp /root/named-3.conf.local /etc/bind/named.conf.local
@@ -220,7 +220,7 @@ Lalu, kita membuat file named-1.conf.local pada root node `Berlint` dengan isi s
   };
   ```
 
-Kita juga membuat script `soal5.sh` dengan isian sebagai berikut:
+Kita juga membuat script `soal5.sh` untuk membuat Berlint menjadi DNS Slave dengan isian sebagai berikut:
   
   ```shell
   apt-get update
@@ -295,7 +295,7 @@ Pertama kita membuat file named-1.conf.options dan wise-3.b10.com pada root node
   operation IN    NS      ns1
   ```
 
-Kita juga membuat script `soal6.sh` dengan isian sebagai berikut:
+Kita juga membuat script `soal6.sh` untuk menambahkan delegasi subdomain berupa operation serta meng-allow semua query dengan isian sebagai berikut:
   
   ```shell
   cp /root/named-1.conf.options /etc/bind/named.conf.options
@@ -371,7 +371,7 @@ Lalu, kita membuat file named-1.conf.options, named-2.conf.local, dan operation-
   www     IN      CNAME   operation.wise.b10.com.
   ```
   
-Kita juga membuat script `soal6.sh` dengan isian sebagai berikut:
+Kita juga membuat script `soal6.sh` sebagai pembuatan alias dari delegasi subdomain dengan isian sebagai berikut:
   
   ```shell
   cp /root/named-1.conf.options /etc/bind/named.conf.options
@@ -412,7 +412,7 @@ Pertama kita membuat file operation-2.wise.b10.com pada root node `Berlint` deng
   www.strix IN    CNAME   strix.operation.wise.b10.com.
   ```
   
-Kita juga membuat script `soal7.sh` dengan isian sebagai berikut:
+Kita juga membuat script `soal7.sh` untuk menambahkan subdomain agar informasinya spesifik mengenai Operation Strix dengan isian sebagai berikut:
   
   ```shell
   cp /root/operation-2.wise.b10.com /etc/bind/operation/operation.wise.b10.com
