@@ -437,58 +437,62 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operat
 ### Penyelesaian
 ![image](https://user-images.githubusercontent.com/67154280/198043861-607baa70-0fcc-4a7a-bfcb-c201b913ffe2.png)
 
-
 ### 10
 > Setelah itu, pada subdomain **www.eden.wise.yyy.com**, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com.
 
 ### Penyelesaian
-![image](https://user-images.githubusercontent.com/67154280/198050387-2a0cb41b-550f-47e8-a603-f749bbe40b7f.png)
-
+![image](https://user-images.githubusercontent.com/67154280/198212646-415c6aa5-46ce-4714-af97-c01170d5429f.png)
 
 ### 11
 > Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja.
 
 ### Penyelesaian
-![image](https://user-images.githubusercontent.com/67154280/198049314-642d0108-805a-412a-a9dd-146e9fb4927e.png)
+![image](https://user-images.githubusercontent.com/67154280/198213720-5ffed1dc-75a7-4844-b932-8a68bb3c1039.png)
 
 ### 12
 > Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
 
 ### Penyelesaian
-![image](https://user-images.githubusercontent.com/67154280/198051102-5ba800d6-673e-46a2-9d83-2549e5e3f360.png)
-
+![image](https://user-images.githubusercontent.com/67154280/198214501-1e667b6f-82f7-49a6-a3d1-84661a7ba05a.png)
 
 ### 13
 > Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset **www.eden.wise.yyy.com/public/js** menjadi **www.eden.wise.yyy.com/js**.
 
 ### Penyelesaian
-![image](https://user-images.githubusercontent.com/67154280/198051833-d3f8ebaf-78cc-46a9-a556-0884dbcc3bcb.png)
-
+![image](https://user-images.githubusercontent.com/67154280/198215123-6afd18cf-3966-434d-a7c8-e2d6cae54404.png)
 
 ### 14
 > Loid meminta agar **www.strix.operation.wise.yyy.com** hanya bisa diakses dengan port 15000 dan port 15500.
 
 ### Penyelesaian
+![image](https://user-images.githubusercontent.com/67154280/198248486-8379c5f3-f550-4c33-ab4d-af1c576844fe.png)
 
+![image](https://user-images.githubusercontent.com/67154280/198248537-d1952e86-3310-4870-9255-ae334215c3ea.png)
 
 ### 15
 > dengan autentikasi username Twilight dan password opStrix dan file di /var/www/strix.operation.wise.yyy
 
 ### Penyelesaian
+Input username `Twilight` dan password `opStrix`
+  
+![image](https://user-images.githubusercontent.com/67154280/198258402-66399df7-2668-4af9-91b5-b2b6ad76f54f.png)
 
+![image](https://user-images.githubusercontent.com/67154280/198260798-a6185c38-0f1e-4b9b-8a74-ce1808345a04.png)
+
+![image](https://user-images.githubusercontent.com/67154280/198262421-80f026e6-3068-4aa7-b785-e33b6690e441.png)
 
 ### 16
 > dan setiap kali mengakses IP Eden akan dialihkan secara otomatis ke **www.wise.yyy.com**.
 
 ### Penyelesaian
-
+![image](https://user-images.githubusercontent.com/67154280/198265190-14a2900f-43f7-4ba4-a9df-72259a6de614.png)
 
 ### 17
 > Karena website **www.eden.wise.yyy.com** semakin banyak pengunjung dan banyak modifikasi sehingga banyak gambar-gambar yang random, maka Loid ingin mengubah request gambar yang memiliki substring “eden” akan diarahkan menuju eden.png. Bantulah Agent Twilight dan Organisasi WISE menjaga perdamaian!
 
 ### Penyelesaian
-
+![image](https://user-images.githubusercontent.com/67154280/198266977-6d9fb7a0-c5fc-4e16-9165-6f7a8044cb26.png)
 
 ## Kendala
 
-- 
+- Terjadi error pada nomor 17 mengenai pengaksesan substring
