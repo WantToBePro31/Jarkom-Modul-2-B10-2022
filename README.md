@@ -638,7 +638,65 @@ Ketika mengakses www.eden.wise.b10.com/js maka akan mendapatkan tampilan seperti
 > Loid meminta agar **www.strix.operation.wise.yyy.com** hanya bisa diakses dengan port 15000 dan port 15500.
 
 ### Penyelesaian
+***pada Eden***
+Membuat konfigurasi Web Server di `default-wise-1-15000.conf` dan `default-wise-1-15500.conf` sebaagi berikut.
 
+```
+<VirtualHost *:15000>
+        ServerName strix.operation.wise.b10.com
+        ServerAlias www.strix.operation.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/strix.operation.wise.b10.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+```
+<VirtualHost *:15500>
+        ServerName strix.operation.wise.b10.com
+        ServerAlias www.strix.operation.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/strix.operation.wise.b10.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+kemudian copi file `cp /root/default-wise-1-15000.conf /etc/apache2/sites-available/strix.operation$` dan `cp /root/default-wise-1-15500.conf /etc/apache2/sites-available/strix.operation$`
+
+Tambahkan port yang akan di listen pada `ports-1.conf` sebagi berikut.
+
+```
+Listen 80
+Listen 15000
+Listen 15500
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+```
+
+kemudian copi file `cp /root/ports-1.conf /etc/apache2/ports.conf`
+
+kemudian aktifkan a2ensite pada `a2ensite strix.operation.wise.b10.com-15000` dan `a2ensite strix.operation.wise.b10.com-15500`
+
+lakukan pembuatan direktori baru dengan `mkdir /var/www/strix.operation.wise.b10.com`
+
+Copy file - file lampiran github ke folder yang telah dibuat `cp -r /root/modul2source-jarkom/strix.operation.wise/. /var/www/strix.operation$`
+
+restart apache `service apache2 restart`
+
+
+pada strix.operation.wise.b10.com dan Alias nya sudah bisa diakses melalui client menggunakan Lynx pada port 15000 atau 15500
 ![image](https://user-images.githubusercontent.com/67154280/198248486-8379c5f3-f550-4c33-ab4d-af1c576844fe.png)
 
 ![image](https://user-images.githubusercontent.com/67154280/198248537-d1952e86-3310-4870-9255-ae334215c3ea.png)
