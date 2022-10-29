@@ -457,7 +457,8 @@ lalu buat direktori var/www/ dengan perintah `mkdir/var/www/wise.b10.com` kemudi
   
 Restart apache dengan `service apache2 restart`
 
-Ketika mengakses www.wise.b10.com atau www.wise.b10.com/index.php/home maka akan mendapatkan tampilan seperti berikut  
+Ketika mengakses www.wise.b10.com atau www.wise.b10.com/index.php/home maka akan mendapatkan tampilan seperti berikut 
+
 ![image](https://user-images.githubusercontent.com/67154280/198006471-78b62a5d-9d74-4bfe-9980-223e57522fac.png)
 
 
@@ -465,6 +466,36 @@ Ketika mengakses www.wise.b10.com atau www.wise.b10.com/index.php/home maka akan
 > Setelah itu, Loid juga membutuhkan agar url **www.wise.yyy.com/index.php/home** dapat menjadi menjadi **www.wise.yyy.com/home**.
 
 ### Penyelesaian
+***pada Server Eden***
+lakukan konfigurasi pada `wise-1.htaccess` dengan 
+```
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^10\.8\.2\.3$
+RewriteRule ^(.*)$ http://www.wise.b10.com/$1 [L,R=301]
+```
+  
+Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan juga ke direktori atau bukan jika hal tersebut terpenuhi maka kita membuat rule untuk melakukan direct ke /index.php/home. $1 merupakan parameter yang diinputkan di url.
+kemudian copi file `cp /root/default-wise-2.conf /etc/apache2/sites-available/wise.b10.com.conf` dan `cp -r /root/modul2source-jarkom/wise/. /var/www/wise.b10.com` selanjutnya konfigurasi file ` /etc/apache2/sites-available/wise.b10.com.conf` dengan 
+
+```
+<VirtualHost *:80>
+        ServerName wise.b10.com
+        ServerAlias www.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/wise.b10.com
+
+        Alias "/home" "/var/www/wise.b10.com/index.php/home"
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+lakukan restart apache2 dengan `service apache2 restart`
+  
+terakhir lakukan testing lynx www.wise.b10.com/home
 ![image](https://user-images.githubusercontent.com/67154280/198043861-607baa70-0fcc-4a7a-bfcb-c201b913ffe2.png)
 
 ### 10
