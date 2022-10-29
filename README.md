@@ -428,6 +428,26 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operat
 > Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver **www.wise.yyy.com**. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com.
 
 ### Penyelesaian
+***pada server SSS dan Garden***
+lakukan `apt-get update` dan juga penginstalan lynx dengan cara 
+```
+apt-get update
+apt-get install lynx -y
+```
+
+***pada server Eden***
+kemudian kita Melakukan instalasi Apache, php, openssl serta git,unzip nya untuk melakukan download ke website https dengan cara
+```
+apt-get install apache2 -y
+apt-get install php -y
+apt-get install libapache2-mod-php7.0 -y
+apt-get install ca-certificates openssl -y
+apt-get install unzip -y
+apt-get install git -y
+```
+
+Untuk mendownload file lakukan `git clone https://github.com/WantToBePro31/modul2source-jarkom.git` lalu unzip file nya dengan command `unzip -o /root/modul2source-jarkom/\*.zip -d /root/modul2source-jarkom` 
+![image](https://drive.google.com/drive/folders/1o3afRgfYPuKak33gUppVIhlnB06GqmER?usp=sharing)
 ![image](https://user-images.githubusercontent.com/67154280/198006471-78b62a5d-9d74-4bfe-9980-223e57522fac.png)
 
 
