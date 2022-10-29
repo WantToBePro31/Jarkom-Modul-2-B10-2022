@@ -697,6 +697,7 @@ restart apache `service apache2 restart`
 
 
 pada strix.operation.wise.b10.com dan Alias nya sudah bisa diakses melalui client menggunakan Lynx pada port 15000 atau 15500
+
 ![image](https://user-images.githubusercontent.com/67154280/198248486-8379c5f3-f550-4c33-ab4d-af1c576844fe.png)
 
 ![image](https://user-images.githubusercontent.com/67154280/198248537-d1952e86-3310-4870-9255-ae334215c3ea.png)
@@ -705,10 +706,61 @@ pada strix.operation.wise.b10.com dan Alias nya sudah bisa diakses melalui clien
 > dengan autentikasi username Twilight dan password opStrix dan file di /var/www/strix.operation.wise.yyy
 
 ### Penyelesaian
+***pada Eden*** 
+Tambahkan code baru berikut pada file `default-wise-2-15000.conf` dan `default-wise-2-15500.conf` sebagai berikut.
+
+```
+<VirtualHost *:15000>
+        ServerName strix.operation.wise.b10.com
+        ServerAlias www.strix.operation.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/strix.operation.wise.b10.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Directory "var/www/strix.operation.wise.b10.com">
+                AuthType Basic
+                AuthName "Restricted Content"
+                AuthUserFile /etc/apache2/.htpasswd
+                Require valid-user
+        </Directory>
+</VirtualHost>
+```
+
+```
+<VirtualHost *:15500>
+        ServerName strix.operation.wise.b10.com
+        ServerAlias www.strix.operation.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/strix.operation.wise.b10.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Directory "var/www/strix.operation.wise.b10.com">
+                AuthType Basic
+                AuthName "Restricted Content"
+                AuthUserFile /etc/apache2/.htpasswd
+                Require valid-user
+        </Directory>
+</VirtualHost>
+```
+
+copi file `cp /root/default-wise-2-15000.conf /etc/apache2/sites-available/strix.operation$` dan `cp /root/default-wise-2-15500.conf /etc/apache2/sites-available/strix.operation$`
+
+Kemudian buat user baru dengan command berikut sehingga memunculkan file .htpasswd pada direktori `htpasswd -b -c /etc/apache2/.htpasswd Twilight opStrix`
+
 Input username `Twilight` dan password `opStrix`
   
 ![image](https://user-images.githubusercontent.com/67154280/198258402-66399df7-2668-4af9-91b5-b2b6ad76f54f.png)
 
+
+restart apache `service apache2 restart`
+
+Ketika web server strix.operation.wise.b10.com diakses, akan diminta authentikasi username dan password
 ![image](https://user-images.githubusercontent.com/67154280/198260798-a6185c38-0f1e-4b9b-8a74-ce1808345a04.png)
 
 ![image](https://user-images.githubusercontent.com/67154280/198262421-80f026e6-3068-4aa7-b785-e33b6690e441.png)
