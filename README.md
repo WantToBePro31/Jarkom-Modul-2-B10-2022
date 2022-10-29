@@ -502,6 +502,35 @@ terakhir lakukan testing lynx www.wise.b10.com/home
 > Setelah itu, pada subdomain **www.eden.wise.yyy.com**, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com.
 
 ### Penyelesaian
+***pada Server Eden***
+lakukan Konfigurasi pada `default-wise-3.conf` dengan 
+
+```
+<VirtualHost *:80>
+        ServerName eden.wise.b10.com
+        ServerAlias www.eden.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.b10.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Kemudian copi file dengan perintah `cp /root/default-wise-3.conf /etc/apache2/sites-available/eden.wise.b10.com.conf` 
+Lalu aktifkan virtualhost dengan a2ensite, membuat direktori untuk documentroot di /var/www/eden.wise.b10.com dan jangan lupa untuk melakukan copy content ke documentroot dengan cara
+
+```
+a2ensite eden.wise.b10.com
+
+mkdir /var/www/eden.wise.b10.com
+cp -r /root/modul2source-jarkom/eden.wise/. /var/www/eden.wise.b10.com
+```
+
+restart apache `service apache2 restart`
+
+lakukan testing pada lynx www.eden.wise.b10.com .Untuk membuktikan kita membuat sebuah file index.php didalamnya
 ![image](https://user-images.githubusercontent.com/67154280/198212646-415c6aa5-46ce-4714-af97-c01170d5429f.png)
 
 ### 11
