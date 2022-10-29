@@ -795,13 +795,13 @@ RewriteCond %{HTTP_HOST} ^10\.8\.2\.3$
 RewriteRule ^(.*)$ http://www.wise.b10.com/$1 [L,R=301]
 ```
 
-Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi aka kita membuat rule untuk melakukan direct ke /index.php/home. $1 merupakan parameter yang diinputkan di url.
+Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi maka kita membuat rule untuk melakukan direct ke `10.8.2.3`. $1 merupakan parameter yang diinputkan di url.
 
 kemudian copi file `cp /root/wise-1.htaccess /var/www/wise.b10.com/.htaccess`
 
 restart apache `service apache2 restart`
 
-Testing lynx 10.8.2.3 
+Testing lynx `10.8.2.3` 
  
 ![image](https://user-images.githubusercontent.com/67154280/198265190-14a2900f-43f7-4ba4-a9df-72259a6de614.png)
 
@@ -809,6 +809,55 @@ Testing lynx 10.8.2.3
 > Karena website **www.eden.wise.yyy.com** semakin banyak pengunjung dan banyak modifikasi sehingga banyak gambar-gambar yang random, maka Loid ingin mengubah request gambar yang memiliki substring “eden” akan diarahkan menuju eden.png. Bantulah Agent Twilight dan Organisasi WISE menjaga perdamaian!
 
 ### Penyelesaian
+***pada Eden***
+Konfigurasi pada file `wise-2.htaccess` sebagai berikut.
+
+```
+a2enmod rewrite
+ewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} !\beden.png\b
+RewriteRule eden http://eden.wise.b10.com/public/images/eden.png$1 [L,R=301]
+```
+
+Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi maka kita membuat rule untuk melakukan direct ke `beden.pns`. $1 merupakan parameter yang diinputkan di url.
+
+copi file `cp /root/wise-2.htaccess /var/www/eden.wise.b10.com/.htaccess`
+
+konfigurasi pada file `default-wise-7.conf` sebagai berikut.
+
+```
+<VirtualHost *:80>
+        ServerName eden.wise.b10.com
+        ServerAlias www.eden.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.b10.com
+
+        <Directory /var/www/eden.wise.b10.com>
+                Options +Indexes
+                AllowOverride All
+        </Directory>
+
+        <Directory /var/www/eden.wise.b10.com/public>
+                Options +Indexes
+        </Directory>
+
+        Alias "/js" "/var/www/eden.wise.b10.com/public/js"
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        ErrorDocument 404 /error/404.html
+</VirtualHost>
+```
+
+copi file `cp /root/default-wise-7.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`
+
+restart apache `service apache2 restart`
+
+Testing lynx www.den.wise.b10.com/public/images/IYAeden maka akan muncul tampilan berikut.
+
 ![image](https://user-images.githubusercontent.com/67154280/198266977-6d9fb7a0-c5fc-4e16-9165-6f7a8044cb26.png)
 
 ## Kendala
