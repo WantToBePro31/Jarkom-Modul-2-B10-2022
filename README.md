@@ -448,6 +448,16 @@ apt-get install git -y
 
 Untuk mendownload file lakukan `git clone https://github.com/WantToBePro31/modul2source-jarkom.git` lalu unzip file nya dengan command `unzip -o /root/modul2source-jarkom/\*.zip -d /root/modul2source-jarkom` 
 ![image](https://github.com/zunia25/praktikum-modul-2-/blob/main/ls_dokumen.png)
+
+pada Eden pindah ke direktori `/etc/apache2/sites-available` lalu copy file default-wise-1.conf ke wise.b10.com.conf dengan perintah `cp /root/default-wise-1.conf /etc/apache2/sites-available/wise.b10.com.conf` 
+  
+Kemudian aktifkan `a2ensite wise.b10.com`
+
+lalu buat direktori var/www/ dengan perintah `mkdir/var/www/wise.b10.com` kemudian copi file dengan perintah `cp /root/wise.b10.com/index.php /var/www/wise.b10.com`
+  
+Restart apache dengan `service apache2 restart`
+
+Ketika mengakses www.wise.b10.com atau www.wise.b10.com/index.php/home maka akan mendapatkan tampilan seperti berikut  
 ![image](https://user-images.githubusercontent.com/67154280/198006471-78b62a5d-9d74-4bfe-9980-223e57522fac.png)
 
 
