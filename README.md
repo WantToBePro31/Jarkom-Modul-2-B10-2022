@@ -447,7 +447,7 @@ apt-get install git -y
 ```
 
 Untuk mendownload file lakukan `git clone https://github.com/WantToBePro31/modul2source-jarkom.git` lalu unzip file nya dengan command `unzip -o /root/modul2source-jarkom/\*.zip -d /root/modul2source-jarkom` 
-![image](https://drive.google.com/drive/folders/1o3afRgfYPuKak33gUppVIhlnB06GqmER?usp=sharing)
+![image](https://drive.google.com/file/d/1SIQrBXjRvnpDxeBSepqLQ00OLaBQQzSA/view?usp=sharing)
 ![image](https://user-images.githubusercontent.com/67154280/198006471-78b62a5d-9d74-4bfe-9980-223e57522fac.png)
 
 
