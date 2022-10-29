@@ -727,7 +727,7 @@ Pada node Garden dan SSS, kita dapat melakukan testing dengan menggunakan lynx p
 
 Tambahkan code baru berikut pada file `default-wise-2-15000.conf` dan `default-wise-2-15500.conf` sebagai berikut.
 
-- default-wise-1-15000.conf
+- default-wise-2-15000.conf
 
   ```
   <VirtualHost *:15000>
@@ -749,7 +749,7 @@ Tambahkan code baru berikut pada file `default-wise-2-15000.conf` dan `default-w
   </VirtualHost>
   ```
 
-- default-wise-1-15500.conf
+- default-wise-2-15500.conf
 
   ```
   <VirtualHost *:15500>
