@@ -428,15 +428,19 @@ Lalu, kita lakukan test pada client `SSS` dan `Garden` dengan `ping strix.operat
 > Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver **www.wise.yyy.com**. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com.
 
 ### Penyelesaian
-***pada server SSS dan Garden***
-lakukan `apt-get update` dan juga penginstalan lynx dengan cara 
+***Pada node SSS dan Garden***
+
+Lakukan `apt-get update` dan juga penginstalan lynx dengan cara 
+
 ```
 apt-get update
 apt-get install lynx -y
 ```
 
-***pada server Eden***
-kemudian kita Melakukan instalasi Apache, php, openssl serta git,unzip nya untuk melakukan download ke website https dengan cara
+***Pada node Eden***
+
+Lakukan instalasi Apache, php, openssl serta git,unzip nya untuk melakukan download ke website https dengan cara
+
 ```
 apt-get install apache2 -y
 apt-get install php -y
@@ -446,27 +450,25 @@ apt-get install unzip -y
 apt-get install git -y
 ```
 
-Untuk mendownload file lakukan `git clone https://github.com/WantToBePro31/modul2source-jarkom.git` lalu unzip file nya dengan command `unzip -o /root/modul2source-jarkom/\*.zip -d /root/modul2source-jarkom` 
+Untuk mendownload file, lakukan `git clone https://github.com/WantToBePro31/modul2source-jarkom.git` (repository tambahan khusus file zip yang dibutuhkan) dan unzip file nya dengan command `unzip -o /root/modul2source-jarkom/\*.zip -d /root/modul2source-jarkom`.
+
 ![image](https://github.com/zunia25/praktikum-modul-2-/blob/main/ls_dokumen.png)
 
-pada Eden pindah ke direktori `/etc/apache2/sites-available` lalu copy file default-wise-1.conf ke wise.b10.com.conf dengan perintah `cp /root/default-wise-1.conf /etc/apache2/sites-available/wise.b10.com.conf` 
+Copy file `default-wise-1.conf` ke `wise.b10.com.conf` dengan perintah `cp /root/default-wise-1.conf /etc/apache2/sites-available/wise.b10.com.conf`. 
   
-Kemudian aktifkan `a2ensite wise.b10.com`
-
-lalu buat direktori var/www/ dengan perintah `mkdir/var/www/wise.b10.com` kemudian copi file dengan perintah `cp /root/wise.b10.com/index.php /var/www/wise.b10.com`
+Kemudian aktifkan website dengan `a2ensite wise.b10.com`, lalu buat direktori `var/www/wise.b10.com` dengan perintah `mkdir /var/www/wise.b10.com` dan copy file dengan perintah `cp /root/wise.b10.com/index.php /var/www/wise.b10.com`.
   
-Restart apache dengan `service apache2 restart`
+Restart apache dengan `service apache2 restart`.
 
-Ketika mengakses www.wise.b10.com atau www.wise.b10.com/index.php maka akan mendapatkan tampilan seperti berikut 
+Lakukan tes pada node SSS dan Garden dengan `lynx http://www.wise.b10.com` atau `lynx http://www.wise.b10.com/index.php` maka akan mendapatkan tampilan seperti berikut 
 
 ![image](https://user-images.githubusercontent.com/67154280/198006471-78b62a5d-9d74-4bfe-9980-223e57522fac.png)
-
 
 ### 9
 > Setelah itu, Loid juga membutuhkan agar url **www.wise.yyy.com/index.php/home** dapat menjadi menjadi **www.wise.yyy.com/home**.
 
 ### Penyelesaian
-copi file `cp /root/default-wise-2.conf /etc/apache2/sites-available/wise.b10.com.conf` dan `cp -r /root/modul2source-jarkom/wise/. /var/www/wise.b10.com` selanjutnya konfigurasi file ` /etc/apache2/sites-available/wise.b10.com.conf` dengan 
+Pada node Eden, copy semua file di folder wise yang sudah diunzip dengan command `cp -r /root/modul2source-jarkom/wise/. /var/www/wise.b10.com`, selanjutnya konfigurasi file `wise.b10.com.conf` dengan `cp /root/default-wise-2.conf /etc/apache2/sites-available/wise.b10.com.conf` dengan isi `default-wise-2.conf` sebagai berikut.
 
 ```
 <VirtualHost *:80>
@@ -483,17 +485,19 @@ copi file `cp /root/default-wise-2.conf /etc/apache2/sites-available/wise.b10.co
 </VirtualHost>
 ```
 
-lakukan restart apache2 dengan `service apache2 restart`
+Lakukan restart apache2 dengan `service apache2 restart`
   
-terakhir lakukan testing lynx www.wise.b10.com/home
+Terakhir lakukan testing pada node Garden dan SSS dengan command `lynx www.wise.b10.com/home`
+
 ![image](https://user-images.githubusercontent.com/67154280/198043861-607baa70-0fcc-4a7a-bfcb-c201b913ffe2.png)
 
 ### 10
 > Setelah itu, pada subdomain **www.eden.wise.yyy.com**, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com.
 
 ### Penyelesaian
-***pada Server Eden***
-lakukan Konfigurasi pada `default-wise-3.conf` dengan 
+***Pada node Eden***
+
+Lakukan konfigurasi pada `default-wise-3.conf` dengan 
 
 ```
 <VirtualHost *:80>
@@ -508,8 +512,9 @@ lakukan Konfigurasi pada `default-wise-3.conf` dengan
 </VirtualHost>
 ```
 
-Kemudian copi file dengan perintah `cp /root/default-wise-3.conf /etc/apache2/sites-available/eden.wise.b10.com.conf` 
-Lalu aktifkan virtualhost dengan a2ensite, membuat direktori untuk documentroot di /var/www/eden.wise.b10.com dan jangan lupa untuk melakukan copy content ke documentroot dengan cara
+Kemudian copy file dengan perintah `cp /root/default-wise-3.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`.
+
+Lalu, aktifkan virtualhost dengan a2ensite, membuat direktori untuk documentroot di `/var/www/eden.wise.b10.com` dan jangan lupa untuk melakukan copy content ke documentroot dengan cara
 
 ```
 a2ensite eden.wise.b10.com
@@ -518,17 +523,19 @@ mkdir /var/www/eden.wise.b10.com
 cp -r /root/modul2source-jarkom/eden.wise/. /var/www/eden.wise.b10.com
 ```
 
-restart apache `service apache2 restart`
+Restart apache `service apache2 restart`.
 
-lakukan testing pada lynx www.eden.wise.b10.com .Untuk membuktikan kita membuat sebuah file index.php didalamnya
+Lakukan testing pada node Garden dan SSS dengan command `lynx http://www.eden.wise.b10.com`.
+
 ![image](https://user-images.githubusercontent.com/67154280/198212646-415c6aa5-46ce-4714-af97-c01170d5429f.png)
 
 ### 11
 > Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja.
 
 ### Penyelesaian
-***pada Eden***
-konfigurasi file `default-wise-4.conf` dengan 
+***Pada node Eden***
+
+Konfigurasi file `default-wise-4.conf` dengan 
 
 ```
 <VirtualHost *:80>
@@ -553,18 +560,21 @@ konfigurasi file `default-wise-4.conf` dengan
 </VirtualHost>
 ```
 
-dan jangan lupa copi file `cp /root/default-wise-4.conf /etc/apache2/sites-available/eden.wise.b10.com.conf` 
-kemudian restart apache `service apache2 restart`
+dan jangan lupa copy file dengan command `cp /root/default-wise-4.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`.
 
-Ketika mengakses www.eden.wise.b10.com/public maka akan mendapat tampilan seperti berikut
+Kemudian restart apache `service apache2 restart`.
+
+Lalu, lakukan testing dengan command `lynx http://www.eden.wise.b10.com/public` maka akan mendapat tampilan seperti berikut.
+
 ![image](https://user-images.githubusercontent.com/67154280/198213720-5ffed1dc-75a7-4844-b932-8a68bb3c1039.png)
 
 ### 12
 > Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
 
 ### Penyelesaian
-***pada Eden***
-konfigurasi file `default-wise-5.conf` dengan menambhkan `ErrorDocument 404 /error/404.html` seperti berikut
+***Pada node Eden***
+
+Konfigurasi file `default-wise-5.conf` dengan menambhkan `ErrorDocument 404 /error/404.html` sehingga terdapat pesan error yang dibuat sendiri seperti berikut
 
 ```
 <VirtualHost *:80>
@@ -589,19 +599,21 @@ konfigurasi file `default-wise-5.conf` dengan menambhkan `ErrorDocument 404 /err
   </VirtualHost>
 ```
   
-copi file `cp /root/default-wise-5.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`
+Copy file dengan command `cp /root/default-wise-5.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`.
 
-restart apache `service apache2 restart`
+Restart apache `service apache2 restart`.
 
-lakukan testing ketika mengakses url invalid seperti www.eden.wise.b10.com/yahuu maka akan mendapatkan tampilan berikut.
+Lakukan testing pada node Garden dan SSS ketika mengakses url invalid seperti `lynx http://www.eden.wise.b10.com/wrong`, maka akan mendapatkan tampilan berikut.
+
 ![image](https://user-images.githubusercontent.com/67154280/198214501-1e667b6f-82f7-49a6-a3d1-84661a7ba05a.png)
 
 ### 13
 > Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset **www.eden.wise.yyy.com/public/js** menjadi **www.eden.wise.yyy.com/js**.
 
 ### Penyelesaian
-***pada Eden***
-lakukan konfigurasi pada file `default-wise-6.conf` dengan menambahkan `Alias "/js" "/var/www/eden.wise.b10.com/public/js"` sebagi berikut.
+***Pada node Eden***
+
+Lakukan konfigurasi pada file `default-wise-6.conf` dengan menambahkan `Alias "/js" "/var/www/eden.wise.b10.com/public/js"` sebagi berikut.
 
 ```
 <VirtualHost *:80>
@@ -627,47 +639,53 @@ lakukan konfigurasi pada file `default-wise-6.conf` dengan menambahkan `Alias "/
 </VirtualHost>
 ```
 
-copi file `cp /root/default-wise-6.conf /etc/apache2/sites-available/eden.wise.b10.com.conf` 
+Copy file dengan command `cp /root/default-wise-6.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`. 
 
-restart apache `service apache2 restrat`
+Restart apache `service apache2 restrat`.
 
-Ketika mengakses www.eden.wise.b10.com/js maka akan mendapatkan tampilan seperti berikut
+Lakukan testing pada node Garden dan SSS ketika mengakses `lynx http://www.eden.wise.b10.com/js`, maka akan mendapatkan tampilan seperti berikut.
+
 ![image](https://user-images.githubusercontent.com/67154280/198215123-6afd18cf-3966-434d-a7c8-e2d6cae54404.png)
 
 ### 14
 > Loid meminta agar **www.strix.operation.wise.yyy.com** hanya bisa diakses dengan port 15000 dan port 15500.
 
 ### Penyelesaian
-***pada Eden***
+***Pada node Eden***
+
 Membuat konfigurasi Web Server di `default-wise-1-15000.conf` dan `default-wise-1-15500.conf` sebaagi berikut.
 
-```
-<VirtualHost *:15000>
-        ServerName strix.operation.wise.b10.com
-        ServerAlias www.strix.operation.wise.b10.com
+- default-wise-1-15000.conf
 
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/strix.operation.wise.b10.com
+  ```
+  <VirtualHost *:15000>
+          ServerName strix.operation.wise.b10.com
+          ServerAlias www.strix.operation.wise.b10.com
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
+          ServerAdmin webmaster@localhost
+          DocumentRoot /var/www/strix.operation.wise.b10.com
 
-```
-<VirtualHost *:15500>
-        ServerName strix.operation.wise.b10.com
-        ServerAlias www.strix.operation.wise.b10.com
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+  ```
 
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/strix.operation.wise.b10.com
+- default-wise-1-15500.conf
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
+  ```
+  <VirtualHost *:15500>
+          ServerName strix.operation.wise.b10.com
+          ServerAlias www.strix.operation.wise.b10.com
 
-kemudian copi file `cp /root/default-wise-1-15000.conf /etc/apache2/sites-available/strix.operation$` dan `cp /root/default-wise-1-15500.conf /etc/apache2/sites-available/strix.operation$`
+          ServerAdmin webmaster@localhost
+          DocumentRoot /var/www/strix.operation.wise.b10.com
+
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+  ```
+
+Kemudian copy file dengan command `cp /root/default-wise-1-15000.conf /etc/apache2/sites-available/strix.operation.wise.b10.com-15000.conf` dan `cp /root/default-wise-1-15500.conf /etc/apache2/sites-available/strix.operation.wise.b10.com-15000.conf`
 
 Tambahkan port yang akan di listen pada `ports-1.conf` sebagi berikut.
 
@@ -685,18 +703,17 @@ Listen 15500
 </IfModule>
 ```
 
-kemudian copi file `cp /root/ports-1.conf /etc/apache2/ports.conf`
+Kemudian copi file `cp /root/ports-1.conf /etc/apache2/ports.conf`.
 
-kemudian aktifkan a2ensite pada `a2ensite strix.operation.wise.b10.com-15000` dan `a2ensite strix.operation.wise.b10.com-15500`
+Kemudian aktifkan a2ensite dengan `a2ensite strix.operation.wise.b10.com-15000` dan `a2ensite strix.operation.wise.b10.com-15500`.
 
-lakukan pembuatan direktori baru dengan `mkdir /var/www/strix.operation.wise.b10.com`
+Lakukan pembuatan direktori baru dengan `mkdir /var/www/strix.operation.wise.b10.com`.
 
-Copy file - file lampiran github ke folder yang telah dibuat `cp -r /root/modul2source-jarkom/strix.operation.wise/. /var/www/strix.operation$`
+Copy file - file lampiran github ke folder yang telah dibuat `cp -r /root/modul2source-jarkom/strix.operation.wise/. /var/www/strix.operation.wise.b10.com`.
 
-restart apache `service apache2 restart`
+Restart apache `service apache2 restart`.
 
-
-pada strix.operation.wise.b10.com dan Alias nya sudah bisa diakses melalui client menggunakan Lynx pada port 15000 atau 15500
+Pada node Garden dan SSS, kita dapat melakukan testing dengan menggunakan lynx pada port 15000 atau 15500 yaitu `lynx http://www.strix.operation.wise.b10.com:15000` atau `lynx http://www.strix.operation.wise.b10.com:15500`.
 
 ![image](https://user-images.githubusercontent.com/67154280/198248486-8379c5f3-f550-4c33-ab4d-af1c576844fe.png)
 
@@ -706,61 +723,67 @@ pada strix.operation.wise.b10.com dan Alias nya sudah bisa diakses melalui clien
 > dengan autentikasi username Twilight dan password opStrix dan file di /var/www/strix.operation.wise.yyy
 
 ### Penyelesaian
-***pada Eden*** 
+***Pada node Eden*** 
+
 Tambahkan code baru berikut pada file `default-wise-2-15000.conf` dan `default-wise-2-15500.conf` sebagai berikut.
 
-```
-<VirtualHost *:15000>
-        ServerName strix.operation.wise.b10.com
-        ServerAlias www.strix.operation.wise.b10.com
+- default-wise-1-15000.conf
 
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/strix.operation.wise.b10.com
+  ```
+  <VirtualHost *:15000>
+          ServerName strix.operation.wise.b10.com
+          ServerAlias www.strix.operation.wise.b10.com
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+          ServerAdmin webmaster@localhost
+          DocumentRoot /var/www/strix.operation.wise.b10.com
 
-        <Directory "var/www/strix.operation.wise.b10.com">
-                AuthType Basic
-                AuthName "Restricted Content"
-                AuthUserFile /etc/apache2/.htpasswd
-                Require valid-user
-        </Directory>
-</VirtualHost>
-```
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-```
-<VirtualHost *:15500>
-        ServerName strix.operation.wise.b10.com
-        ServerAlias www.strix.operation.wise.b10.com
+          <Directory "var/www/strix.operation.wise.b10.com">
+                  AuthType Basic
+                  AuthName "Restricted Content"
+                  AuthUserFile /etc/apache2/.htpasswd
+                  Require valid-user
+          </Directory>
+  </VirtualHost>
+  ```
 
-        ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/strix.operation.wise.b10.com
+- default-wise-1-15500.conf
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+  ```
+  <VirtualHost *:15500>
+          ServerName strix.operation.wise.b10.com
+          ServerAlias www.strix.operation.wise.b10.com
 
-        <Directory "var/www/strix.operation.wise.b10.com">
-                AuthType Basic
-                AuthName "Restricted Content"
-                AuthUserFile /etc/apache2/.htpasswd
-                Require valid-user
-        </Directory>
-</VirtualHost>
-```
+          ServerAdmin webmaster@localhost
+          DocumentRoot /var/www/strix.operation.wise.b10.com
 
-copi file `cp /root/default-wise-2-15000.conf /etc/apache2/sites-available/strix.operation$` dan `cp /root/default-wise-2-15500.conf /etc/apache2/sites-available/strix.operation$`
+          ErrorLog ${APACHE_LOG_DIR}/error.log
+          CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-Kemudian buat user baru dengan command berikut sehingga memunculkan file .htpasswd pada direktori `htpasswd -b -c /etc/apache2/.htpasswd Twilight opStrix`
+          <Directory "var/www/strix.operation.wise.b10.com">
+                  AuthType Basic
+                  AuthName "Restricted Content"
+                  AuthUserFile /etc/apache2/.htpasswd
+                  Require valid-user
+          </Directory>
+  </VirtualHost>
+  ```
 
-Input username `Twilight` dan password `opStrix`
+Copy file dengan command `cp /root/default-wise-2-15000.conf /etc/apache2/sites-available/strix.operation.wise.b10.com-15000` dan `cp /root/default-wise-2-15500.conf /etc/apache2/sites-available/strix.operation.wise.b10.com-15500`.
+
+Kemudian buat autentikasi baru dengan command berikut sehingga memunculkan file .htpasswd pada dengan command `htpasswd -b -c /etc/apache2/.htpasswd Twilight opStrix`.
+
+Restart apache `service apache2 restart`.
+
+Ketika web server `strix.operation.wise.b10.com` diakses, akan diminta authentikasi username dan password.
+
+Input username `Twilight` dan password `opStrix`.
   
 ![image](https://user-images.githubusercontent.com/67154280/198258402-66399df7-2668-4af9-91b5-b2b6ad76f54f.png)
 
-
-restart apache `service apache2 restart`
-
-Ketika web server strix.operation.wise.b10.com diakses, akan diminta authentikasi username dan password sehingga akan menampilkan tampilan berikut.
+Kemudian akan menampilakn hasil berikut.
 
 ![image](https://user-images.githubusercontent.com/67154280/198260798-a6185c38-0f1e-4b9b-8a74-ce1808345a04.png)
 
@@ -770,8 +793,9 @@ Ketika web server strix.operation.wise.b10.com diakses, akan diminta authentikas
 > dan setiap kali mengakses IP Eden akan dialihkan secara otomatis ke **www.wise.yyy.com**.
 
 ### Penyelesaian
-***pada Eden***
-pada file `default-1.conf` sebagai berikut.
+***Pada node Eden***
+
+Konfigurasi pada file `default-1.conf` sebagai berikut.
  
 ```
 <VirtualHost *:80>
@@ -783,9 +807,9 @@ pada file `default-1.conf` sebagai berikut.
 </VirtualHost>
 ```
 
-copi file tersebut `cp /root/default-1.conf /etc/apache2/sites-available/000-default.conf`
+Copy file tersebut dengan command `cp /root/default-1.conf /etc/apache2/sites-available/000-default.conf`.
 
-konfigurasi pada file `wise-1.htaccess` sebagai berikut.
+Konfigurasi pada file `wise-1.htaccess` sebagai berikut.
 
 ```
 a2enmod rewrite
@@ -795,13 +819,13 @@ RewriteCond %{HTTP_HOST} ^10\.8\.2\.3$
 RewriteRule ^(.*)$ http://www.wise.b10.com/$1 [L,R=301]
 ```
 
-Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi maka kita membuat rule untuk melakukan direct ke `10.8.2.3`. $1 merupakan parameter yang diinputkan di url.
+Inti dari konfigurasi tersebut adalah kita melakukan cek apakah pengaksesan berupa ip ke arah Eden jika hal tersebut terpenuhi maka kita membuat rule untuk melakukan direct ke `www.wise.b10.com`.
 
-kemudian copi file `cp /root/wise-1.htaccess /var/www/wise.b10.com/.htaccess`
+Kemudian copy file dengan command `cp /root/wise-1.htaccess /var/www/wise.b10.com/.htaccess`.
 
-restart apache `service apache2 restart`
+Restart apache `service apache2 restart`.
 
-Testing lynx `10.8.2.3` 
+Testing pada node Garden dan SSS dengan command `lynx 10.8.2.3`. 
  
 ![image](https://user-images.githubusercontent.com/67154280/198265190-14a2900f-43f7-4ba4-a9df-72259a6de614.png)
 
@@ -809,7 +833,8 @@ Testing lynx `10.8.2.3`
 > Karena website **www.eden.wise.yyy.com** semakin banyak pengunjung dan banyak modifikasi sehingga banyak gambar-gambar yang random, maka Loid ingin mengubah request gambar yang memiliki substring “eden” akan diarahkan menuju eden.png. Bantulah Agent Twilight dan Organisasi WISE menjaga perdamaian!
 
 ### Penyelesaian
-***pada Eden***
+***Pada node Eden***
+
 Konfigurasi pada file `wise-2.htaccess` sebagai berikut.
 
 ```
@@ -820,11 +845,11 @@ RewriteCond %{REQUEST_URI} !\beden.png\b
 RewriteRule eden http://eden.wise.b10.com/public/images/eden.png$1 [L,R=301]
 ```
 
-Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi maka kita membuat rule untuk melakukan direct ke `beden.pns`. $1 merupakan parameter yang diinputkan di url.
+Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request mengandung substring `eden`, jika ya maka akan diarahkan ke `http://eden.wise.b10.com/public/images/eden.png`.
 
-copi file `cp /root/wise-2.htaccess /var/www/eden.wise.b10.com/.htaccess`
+Copy file dengan command `cp /root/wise-2.htaccess /var/www/eden.wise.b10.com/.htaccess`.
 
-konfigurasi pada file `default-wise-7.conf` sebagai berikut.
+Konfigurasi pada file `default-wise-7.conf` sebagai berikut.
 
 ```
 <VirtualHost *:80>
@@ -852,11 +877,11 @@ konfigurasi pada file `default-wise-7.conf` sebagai berikut.
 </VirtualHost>
 ```
 
-copi file `cp /root/default-wise-7.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`
+Copy file dengan command `cp /root/default-wise-7.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`.
 
-restart apache `service apache2 restart`
+Restart apache `service apache2 restart`.
 
-Testing lynx www.den.wise.b10.com/public/images/IYAeden maka akan muncul tampilan berikut.
+Testing pada node Garden dan SSS dengan command `lynx www.den.wise.b10.com/public/images/abcedendef`, maka akan muncul tampilan berikut.
 
 ![image](https://user-images.githubusercontent.com/67154280/198266977-6d9fb7a0-c5fc-4e16-9165-6f7a8044cb26.png)
 
