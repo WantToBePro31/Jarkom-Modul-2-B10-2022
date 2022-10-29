@@ -527,24 +527,118 @@ lakukan testing pada lynx www.eden.wise.b10.com .Untuk membuktikan kita membuat 
 > Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja.
 
 ### Penyelesaian
+***pada Eden***
+konfigurasi file `default-wise-4.conf` dengan 
+
+```
+<VirtualHost *:80>
+        ServerName eden.wise.b10.com
+        ServerAlias www.eden.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.b10.com
+
+        <Directory /var/www/eden.wise.b10.com>
+                Options +Indexes
+        </Directory>
+
+        <Directory /var/www/eden.wise.b10.com/error>
+                Options -Indexes
+        </Directory>
+
+        <Directory /var/www/eden.wise.b10.com/public>
+                Options +Indexes
+        </Directory>
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+dan jangan lupa copi file `cp /root/default-wise-4.conf /etc/apache2/sites-available/eden.wise.b10.com.conf` 
+kemudian restart apache `service apache2 restart`
+
+Ketika mengakses www.eden.wise.b10.com/public maka akan mendapat tampilan seperti berikut
 ![image](https://user-images.githubusercontent.com/67154280/198213720-5ffed1dc-75a7-4844-b932-8a68bb3c1039.png)
 
 ### 12
 > Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache.
 
 ### Penyelesaian
+***pada Eden***
+konfigurasi file `default-wise-5.conf` dengan menambhkan `ErrorDocument 404 /error/404.html` seperti berikut
+
+```
+<VirtualHost *:80>
+        ServerName eden.wise.b10.com
+        ServerAlias www.eden.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.b10.com
+
+        <Directory /var/www/eden.wise.b10.com>
+                Options +Indexes
+        </Directory>
+
+        <Directory /var/www/eden.wise.b10.com/public>
+                Options +Indexes
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        ErrorDocument 404 /error/404.html
+  </VirtualHost>
+```
+  
+copi file `cp /root/default-wise-5.conf /etc/apache2/sites-available/eden.wise.b10.com.conf`
+
+restart apache `service apache2 restart`
+
+lakukan testing ketika mengakses url invalid seperti www.eden.wise.b10.com/yahuu maka akan mendapatkan tampilan berikut.
 ![image](https://user-images.githubusercontent.com/67154280/198214501-1e667b6f-82f7-49a6-a3d1-84661a7ba05a.png)
 
 ### 13
 > Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset **www.eden.wise.yyy.com/public/js** menjadi **www.eden.wise.yyy.com/js**.
 
 ### Penyelesaian
+***pada Eden***
+lakukan konfigurasi pada file `default-wise-6.conf` dengan menambahkan `Alias "/js" "/var/www/eden.wise.b10.com/public/js"` sebagi berikut.
+
+```
+<VirtualHost *:80>
+        ServerName eden.wise.b10.com
+        ServerAlias www.eden.wise.b10.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/eden.wise.b10.com
+
+        <Directory /var/www/eden.wise.b10.com>
+                Options +Indexes
+        </Directory>
+
+        <Directory /var/www/eden.wise.b10.com/public>
+                Options +Indexes
+        </Directory>
+
+        Alias "/js" "/var/www/eden.wise.b10.com/public/js"
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        ErrorDocument 404 /error/404.html
+</VirtualHost>
+```
+
+copi file `cp /root/default-wise-6.conf /etc/apache2/sites-available/eden.wise.b10.com.conf` 
+
+restart apache `service apache2 restrat`
+
+Ketika mengakses www.eden.wise.b10.com/js maka akan mendapatkan tampilan seperti berikut
 ![image](https://user-images.githubusercontent.com/67154280/198215123-6afd18cf-3966-434d-a7c8-e2d6cae54404.png)
 
 ### 14
 > Loid meminta agar **www.strix.operation.wise.yyy.com** hanya bisa diakses dengan port 15000 dan port 15500.
 
 ### Penyelesaian
+
 ![image](https://user-images.githubusercontent.com/67154280/198248486-8379c5f3-f550-4c33-ab4d-af1c576844fe.png)
 
 ![image](https://user-images.githubusercontent.com/67154280/198248537-d1952e86-3310-4870-9255-ae334215c3ea.png)
