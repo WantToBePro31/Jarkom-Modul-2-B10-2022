@@ -760,7 +760,8 @@ Input username `Twilight` dan password `opStrix`
 
 restart apache `service apache2 restart`
 
-Ketika web server strix.operation.wise.b10.com diakses, akan diminta authentikasi username dan password
+Ketika web server strix.operation.wise.b10.com diakses, akan diminta authentikasi username dan password sehingga akan menampilkan tampilan berikut.
+
 ![image](https://user-images.githubusercontent.com/67154280/198260798-a6185c38-0f1e-4b9b-8a74-ce1808345a04.png)
 
 ![image](https://user-images.githubusercontent.com/67154280/198262421-80f026e6-3068-4aa7-b785-e33b6690e441.png)
@@ -769,6 +770,39 @@ Ketika web server strix.operation.wise.b10.com diakses, akan diminta authentikas
 > dan setiap kali mengakses IP Eden akan dialihkan secara otomatis ke **www.wise.yyy.com**.
 
 ### Penyelesaian
+***pada Eden***
+pada file `default-1.conf` sebagai berikut.
+ 
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/wise.b10.com
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+copi file tersebut `cp /root/default-1.conf /etc/apache2/sites-available/000-default.conf`
+
+konfigurasi pada file `wise-1.htaccess` sebagai berikut.
+
+```
+a2enmod rewrite
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^10\.8\.2\.3$
+RewriteRule ^(.*)$ http://www.wise.b10.com/$1 [L,R=301]
+```
+
+Inti dari konfigurasi tersebut adalah kita melakukan cek apakah request tersebut adalah ke file atau bukan dan ke direktori atau bukan jika hal tersebut terpenuhi aka kita membuat rule untuk melakukan direct ke /index.php/home. $1 merupakan parameter yang diinputkan di url.
+
+kemudian copi file `cp /root/wise-1.htaccess /var/www/wise.b10.com/.htaccess`
+
+restart apache `service apache2 restart`
+
+Testing lynx 10.8.2.3 
+ 
 ![image](https://user-images.githubusercontent.com/67154280/198265190-14a2900f-43f7-4ba4-a9df-72259a6de614.png)
 
 ### 17
