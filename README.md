@@ -881,7 +881,7 @@ Copy file dengan command `cp /root/default-wise-7.conf /etc/apache2/sites-availa
 
 Restart apache `service apache2 restart`.
 
-Testing pada node Garden dan SSS dengan command `lynx www.den.wise.b10.com/public/images/abcedendef`, maka akan muncul tampilan berikut.
+Testing pada node Garden dan SSS dengan command `lynx www.eden.wise.b10.com/public/images/abcedendef`, maka akan muncul tampilan berikut.
 
 ![image](https://user-images.githubusercontent.com/67154280/198266977-6d9fb7a0-c5fc-4e16-9165-6f7a8044cb26.png)
 
